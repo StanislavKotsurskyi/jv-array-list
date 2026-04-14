@@ -1,9 +1,18 @@
 package core.basesyntax;
 
 public class ArrayList<T> implements List<T> {
-    @Override
-    public void add(T value) {
 
+    private static final int DEFAULT_SIZE = 10;
+    private Object[] elementData;
+    private int size;
+
+    @Override
+    public void add(int index, T value) {
+        if (elementData.length == size) {
+            elementData = ;
+        }
+        elementData[index] = value;
+        size = size + 1;
     }
 
     @Override
@@ -38,7 +47,7 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
