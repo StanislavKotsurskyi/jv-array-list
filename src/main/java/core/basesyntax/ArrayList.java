@@ -1,8 +1,6 @@
 package core.basesyntax;
 
-import java.util.Arrays;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 public class ArrayList<T> implements List<T> {
     private static final int START_INDEX = 0;
@@ -71,17 +69,13 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public T remove(T element) {
-        int index = 0;
-        for (T elementDatum : elementData) {
-            if (Objects.equals(elementDatum, element)) {
-                T value = elementData[index];
-                System.arraycopy(elementData, index + 1, elementData, index, size - index);
-                size--;
-                return value;
+        for (int i = 0; i < size; i++) {
+            if (element == elementData[i]
+                    || (elementData[i] != null && elementData[i].equals(element))) {
+                return remove(i);
             }
-            index++;
         }
-        throw new NoSuchElementException();
+        throw new NoSuchElementException("Element not found: " + element);
     }
 
     @Override
@@ -94,14 +88,11 @@ public class ArrayList<T> implements List<T> {
         return size == 0;
     }
 
-    @Override
-    public String toString() {
-        return Arrays.toString(elementData);
-    }
-
     private void grow() {
         capacity += capacity / 2;
-        elementData = Arrays.copyOf(elementData, capacity);
+        T[] newElementData = (T[]) new Object[capacity];
+        System.arraycopy(elementData, START_INDEX, newElementData, START_INDEX, size);
+        elementData = newElementData;
     }
 
     private void checkIndex(int index) {
